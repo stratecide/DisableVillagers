@@ -12,8 +12,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 public class DisableVillagersMod implements ModInitializer {
@@ -23,7 +21,9 @@ public class DisableVillagersMod implements ModInitializer {
 	private static final String DEFAULT_CONFIG = "{\n" +
 			"  killVillagers: true,\n" +
 			"  spareExperiencedVillagers: true,\n" +
+			"  breeding: false,\n" +
 			"  disableVillages: true,\n" +
+			"  curableZombies: true,\n" +
 			"  curedZombieLoot: {\n" +
 			"    \"pools\": [\n" +
 			"      {\n" +
@@ -43,6 +43,8 @@ public class DisableVillagersMod implements ModInitializer {
 
 	public static boolean killVillagers = false;
 	public static boolean spareExperiencedVillagers = false;
+	public static boolean breeding = false;
+	public static boolean curableZombies = true;
 	private static JsonElement curedZombieLootJson = null;
 	public static LootTable curedZombieLoot = null;
 	private static boolean disableVillages = false;
@@ -63,7 +65,7 @@ public class DisableVillagersMod implements ModInitializer {
 			return;
 		isInitialized = true;
 		File file = new File(CONFIG_FILE);
-		String data = null;
+		String data;
 		if (!file.exists()) {
 			data = DEFAULT_CONFIG;
 			try (FileWriter writer = new FileWriter(CONFIG_FILE)) {
@@ -88,6 +90,8 @@ public class DisableVillagersMod implements ModInitializer {
 		JsonObject config = new JsonParser().parse(data).getAsJsonObject();
 		killVillagers = config.get("killVillagers").getAsBoolean();
 		spareExperiencedVillagers = config.get("spareExperiencedVillagers").getAsBoolean();
+		breeding = config.get("breeding").getAsBoolean();
+		curableZombies = config.get("curableZombies").getAsBoolean();
 		disableVillages = config.get("disableVillages").getAsBoolean();
 		curedZombieLootJson = config.get("curedZombieLoot");
 	}

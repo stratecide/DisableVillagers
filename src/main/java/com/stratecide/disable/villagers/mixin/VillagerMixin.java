@@ -2,7 +2,6 @@ package com.stratecide.disable.villagers.mixin;
 
 import com.stratecide.disable.villagers.DisableVillagersMod;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.world.World;
@@ -11,6 +10,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(VillagerEntity.class)
 public abstract class VillagerMixin extends MerchantEntity {
@@ -25,6 +25,13 @@ public abstract class VillagerMixin extends MerchantEntity {
         if (DisableVillagersMod.killVillagers && (!DisableVillagersMod.spareExperiencedVillagers || experience == 0) && !this.isDead()) {
             this.kill();
             ci.cancel();
+        }
+    }
+
+    @Inject(method = "isReadyToBreed", at = @At("HEAD"), cancellable = true)
+    private void isReadyToBreedInject(CallbackInfoReturnable<Boolean> cir) {
+        if (!DisableVillagersMod.breeding) {
+            cir.setReturnValue(false);
         }
     }
 }
