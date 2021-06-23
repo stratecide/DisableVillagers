@@ -6,6 +6,7 @@
   "mixins": [
     "ZombieVillagerMixin",
     "VillagerMixin",
+    "MerchantEntityMixin",
     "GenerationSettingsBuilderMixin"
   ],
   "injectors": {
