@@ -20,6 +20,7 @@ public class DisableVillagersMod implements ModInitializer {
 	private static final String CONFIG_FILE = CONFIG_FOLDER + "disable-villagers.json";
 	private static final String DEFAULT_CONFIG = "{\n" +
 			"  killVillagers: true,\n" +
+			"  disableWanderingTrader: true,\n" +
 			"  blockTrading: true,\n" +
 			"  spareExperiencedVillagers: true,\n" +
 			"  breeding: false,\n" +
@@ -43,6 +44,7 @@ public class DisableVillagersMod implements ModInitializer {
 	private static boolean isInitialized = false;
 
 	public static boolean killVillagers = false;
+	public static boolean disableWanderingTrader = false;
 	public static boolean blockTrading = false;
 	public static boolean spareExperiencedVillagers = false;
 	public static boolean breeding = false;
@@ -91,6 +93,7 @@ public class DisableVillagersMod implements ModInitializer {
 		}
 		JsonObject config = new JsonParser().parse(data).getAsJsonObject();
 		killVillagers = config.get("killVillagers").getAsBoolean();
+		disableWanderingTrader = config.has("disableWanderingTrader") && config.get("disableWanderingTrader").getAsBoolean();
 		blockTrading = config.get("blockTrading").getAsBoolean();
 		spareExperiencedVillagers = config.get("spareExperiencedVillagers").getAsBoolean();
 		breeding = config.get("breeding").getAsBoolean();
