@@ -4,6 +4,7 @@
   "package": "com.stratecide.disable.villagers.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
+    "DefaultBiomeFeaturesMixin",
     "ZombieVillagerMixin",
     "VillagerMixin",
     "MerchantEntityMixin",

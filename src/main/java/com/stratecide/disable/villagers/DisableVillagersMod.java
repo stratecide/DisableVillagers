@@ -25,6 +25,7 @@ public class DisableVillagersMod implements ModInitializer {
 			"  spareExperiencedVillagers: true,\n" +
 			"  breeding: false,\n" +
 			"  disableVillages: true,\n" +
+			"  disableZombies: false,\n" +
 			"  curableZombies: true,\n" +
 			"  curedZombieLoot: {\n" +
 			"    \"pools\": [\n" +
@@ -48,6 +49,11 @@ public class DisableVillagersMod implements ModInitializer {
 	public static boolean blockTrading = false;
 	public static boolean spareExperiencedVillagers = false;
 	public static boolean breeding = false;
+	private static boolean disableZombies = true;
+	public static boolean getDisabledZombies() {
+		loadConfig();
+		return disableZombies;
+	}
 	public static boolean curableZombies = true;
 	private static JsonElement curedZombieLootJson = null;
 	public static LootTable curedZombieLoot = null;
@@ -97,6 +103,7 @@ public class DisableVillagersMod implements ModInitializer {
 		blockTrading = config.get("blockTrading").getAsBoolean();
 		spareExperiencedVillagers = config.get("spareExperiencedVillagers").getAsBoolean();
 		breeding = config.get("breeding").getAsBoolean();
+		disableZombies = config.has("disableZombies") && config.get("disableZombies").getAsBoolean();
 		curableZombies = config.get("curableZombies").getAsBoolean();
 		disableVillages = config.get("disableVillages").getAsBoolean();
 		curedZombieLootJson = config.get("curedZombieLoot");
