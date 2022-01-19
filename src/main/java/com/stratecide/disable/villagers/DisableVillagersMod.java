@@ -97,7 +97,7 @@ public class DisableVillagersMod implements ModInitializer {
 				data = DEFAULT_CONFIG;
 			}
 		}
-		JsonObject config = new JsonParser().parse(data).getAsJsonObject();
+		JsonObject config = JsonParser.parseString(data).getAsJsonObject();
 		killVillagers = config.get("killVillagers").getAsBoolean();
 		disableWanderingTrader = config.has("disableWanderingTrader") && config.get("disableWanderingTrader").getAsBoolean();
 		blockTrading = config.get("blockTrading").getAsBoolean();
