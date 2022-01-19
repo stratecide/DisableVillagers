@@ -1,4 +1,6 @@
 # DisableVillagers
+https://www.curseforge.com/minecraft/mc-mods/disable-villagers
+
 Minecraft Fabric mod to disable villagers
 
 This mod has 4 configuration options:
