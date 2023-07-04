@@ -11,6 +11,9 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(DefaultBiomeFeatures.class)
 public class DefaultBiomeFeaturesMixin {
+    /**
+     * Replace zombie villagers by adding their spawn-weight to the normal zombies'
+     */
     @ModifyVariable(method = "addMonsters", at = @At("HEAD"), ordinal = 0)
     private static int fixZombieChance(int weight, SpawnSettings.Builder builder, int zombieWeight, int zombieVillagerWeight, int skeletonWeight) {
         if (DisableVillagersMod.getDisabledZombies())
@@ -18,10 +21,13 @@ public class DefaultBiomeFeaturesMixin {
         return weight;
     }
 
+    /**
+     * bypass the builder.spawn(...) call if zombie villagers are disabled
+     */
     @Redirect(method = "addMonsters", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/biome/SpawnSettings$Builder;spawn(Lnet/minecraft/entity/SpawnGroup;Lnet/minecraft/world/biome/SpawnSettings$SpawnEntry;)Lnet/minecraft/world/biome/SpawnSettings$Builder;", ordinal = 2))
-    private static SpawnSettings.Builder removeZombieVillagers(SpawnSettings.Builder instance, SpawnGroup spawnGroup, SpawnSettings.SpawnEntry spawnEntry) {
+    private static SpawnSettings.Builder removeZombieVillagers(SpawnSettings.Builder builder, SpawnGroup spawnGroup, SpawnSettings.SpawnEntry spawnEntry) {
         if (!DisableVillagersMod.getDisabledZombies())
-            return instance.spawn(spawnGroup, spawnEntry);
-        return instance;
+            return builder.spawn(spawnGroup, spawnEntry);
+        return builder;
     }
 }

@@ -7,6 +7,8 @@ import com.google.gson.JsonParser;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.loot.LootGsons;
 import net.minecraft.loot.LootTable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,31 +18,33 @@ import java.util.Scanner;
 
 public class DisableVillagersMod implements ModInitializer {
 
+	public static final Logger LOGGER = LoggerFactory.getLogger("disable.villagers");
 	private static final String CONFIG_FOLDER = "config/";
 	private static final String CONFIG_FILE = CONFIG_FOLDER + "disable-villagers.json";
-	private static final String DEFAULT_CONFIG = "{\n" +
-			"  killVillagers: true,\n" +
-			"  disableWanderingTrader: true,\n" +
-			"  blockTrading: true,\n" +
-			"  spareExperiencedVillagers: true,\n" +
-			"  breeding: false,\n" +
-			"  disableVillages: true,\n" +
-			"  disableZombies: false,\n" +
-			"  curableZombies: true,\n" +
-			"  curedZombieLoot: {\n" +
-			"    \"pools\": [\n" +
-			"      {\n" +
-			"        \"rolls\": 1,\n" +
-			"        \"entries\": [\n" +
-			"          {\n" +
-			"            \"type\": \"minecraft:item\",\n" +
-			"            \"name\": \"minecraft:emerald_block\"\n" +
-			"          }\n" +
-			"        ]\n" +
-			"      }\n" +
-			"    ]\n" +
-			"  }\n" +
-			"}";
+	private static final String DEFAULT_CONFIG = """
+{
+  "killVillagers": true,
+  "disableWanderingTrader": true,
+  "blockTrading": true,
+  "spareExperiencedVillagers": true,
+  "breeding": false,
+  "disableVillages": true,
+  "disableZombies": false,
+  "curableZombies": true,
+  "curedZombieLoot": {
+	"pools": [
+	  {
+		"rolls": 1,
+		"entries": [
+		  {
+			"type": "minecraft:item",
+			"name": "minecraft:emerald_block"
+		  }
+		]
+	  }
+	]
+  }
+}""";
 	private static final Gson GSON = LootGsons.getTableGsonBuilder().create();
 	private static boolean isInitialized = false;
 
@@ -77,6 +81,7 @@ public class DisableVillagersMod implements ModInitializer {
 		File file = new File(CONFIG_FILE);
 		String data;
 		if (!file.exists()) {
+			file.getParentFile().mkdirs();
 			data = DEFAULT_CONFIG;
 			try (FileWriter writer = new FileWriter(CONFIG_FILE)) {
 				writer.write(data);
