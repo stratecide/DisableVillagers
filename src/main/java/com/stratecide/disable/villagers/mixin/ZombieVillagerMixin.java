@@ -45,7 +45,7 @@ public abstract class ZombieVillagerMixin extends ZombieEntity {
 	@Inject(method = "finishConversion", at=@At("HEAD"), cancellable = true)
 	private void finishConversionInject(ServerWorld world, CallbackInfo ci) {
 		if (DisableVillagersMod.curedZombieLoot != null) {
-			DamageSource source = DamageSource.GENERIC;
+			DamageSource source = world.getDamageSources().generic();
 			LootContext.Builder builder = (new LootContext.Builder((ServerWorld)this.world)).random(this.random).parameter(LootContextParameters.THIS_ENTITY, this).parameter(LootContextParameters.ORIGIN, this.getPos()).parameter(LootContextParameters.DAMAGE_SOURCE, source).optionalParameter(LootContextParameters.KILLER_ENTITY, source.getAttacker()).optionalParameter(LootContextParameters.DIRECT_KILLER_ENTITY, source.getSource());
 			if (converter != null) {
 				PlayerEntity playerEntity = world.getPlayerByUuid(this.converter);

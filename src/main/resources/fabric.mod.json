@@ -2,7 +2,6 @@
   "schemaVersion": 1,
   "id": "disable-villagers",
   "version": "${version}",
-
   "name": "Disable Villagers",
   "description": "Disables villager/village spawns and zombie-villager healing",
   "authors": [
@@ -13,10 +12,8 @@
     "sources": "https://github.com/stratecide/DisableVillagers",
     "issues": "https://github.com/stratecide/DisableVillagers/issues"
   },
-
   "license": "MIT License",
   "icon": "assets/disable_villagers/icon.png",
-
   "environment": "*",
   "entrypoints": {
     "main": [
@@ -26,10 +23,9 @@
   "mixins": [
     "disable_villagers.mixins.json"
   ],
-
   "depends": {
     "fabricloader": ">=0.14.21",
-    "minecraft": "~1.19",
+    "minecraft": "~1.19.4",
     "java": ">=17"
   }
 }

@@ -1,14 +1,11 @@
 {
   "required": true,
-  "minVersion": "0.8",
   "package": "com.stratecide.disable.villagers.mixin",
-  "compatibilityLevel": "JAVA_16",
+  "compatibilityLevel": "JAVA_17",
   "mixins": [
     "DefaultBiomeFeaturesMixin",
-    "FlatChunkGeneratorConfigMixin",
     "MerchantEntityMixin",
-    "StructureSetsMixin",
-    "StructuresMixin",
+    "StructurePlacementCalculatorMixin",
     "VillagerMixin",
     "WanderingTraderManagerMixin",
     "ZombieVillagerMixin"
